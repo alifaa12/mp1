@@ -38,12 +38,12 @@ module.exports = {
   // untuk login user
   login: async (req, res) => {
     try {
-      const username = req.body.username;
+      const email = req.body.email;
       const password = req.body.password;
 
       const data = await User.findOne({
         where: {
-          username: username,
+          email: email,
         },
       });
       if (!data) {
@@ -55,8 +55,8 @@ module.exports = {
       }
 
       const payload = {
-        ID: data.dataValues.id,
-        Username: data.dataValues.username,
+        id: data.dataValues.id,
+        firstname: data.dataValues.firstname,
       };
       const token = jwt.sign(payload, process.env.TOKEN);
       res.json({

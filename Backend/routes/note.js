@@ -3,9 +3,9 @@ const router = express.Router();
 const noteController = require("../controller/note");
 const middleware = require("../middleware/middleware");
 
-router.post("/create", middleware.middleWareJWT, noteController.create);
+router.post("/create", noteController.create);
 
-router.get("/read", middleware.middleWareJWT, noteController.read);
+router.get("/read", noteController.read);
 
 router.get("/detail/:id", noteController.detail);
 

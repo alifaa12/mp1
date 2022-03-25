@@ -6,8 +6,13 @@ module.exports = {
   // membuat notes
   create: async function (req, res) {
     try {
-      console.log(req.payload.ID);
-      const data = await Notes.create({ isPriority: req.body.isPriority, userId: req.payload.ID, date: req.body.date, day: req.body.day, note: req.body.note });
+      const data = await Notes.create({
+        userId: req.body.userId,
+        isPriority: req.body.isPriority,
+        date: req.body.date,
+        day: req.body.day,
+        note: req.body.note,
+      });
       res.json(data);
     } catch (Error) {
       console.log(Error.message);
@@ -17,7 +22,7 @@ module.exports = {
   update: async function (req, res) {
     const id = req.params.id;
     const data = await Notes.update(
-      { note: req.body.note },
+      { note: req.body.note, isPriority: req.body.isPriority},
       {
         where: {
           id: id,
@@ -28,9 +33,9 @@ module.exports = {
   },
   read: async function (req, res) {
     const data = await Notes.findAll({
-      benchmark: true,
-      offset: JSON.parse(req.query.page * req.query.size),
-      limit: JSON.parse(req.query.size),
+      // benchmark: true,
+      // offset: JSON.parse(req.query.page * req.query.size),
+      // limit: JSON.parse(req.query.size),
       // where: {
       //   userId: req.payload.ID,
       // },
@@ -54,7 +59,7 @@ module.exports = {
   relation: async function (req, res) {
     const data = await User.findOne({
       where: {
-        id: req.payload.ID,
+        id: req.payload.id,
       },
       include: [{ model: Notes }],
     });
